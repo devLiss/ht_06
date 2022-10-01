@@ -9,6 +9,8 @@ import {postRepo} from "./repositories/post-db-repo";
 import {userRouter} from "./routes/usersRouter";
 import {authRouter} from "./routes/authRouter";
 import {userRepo} from "./repositories/user-db-repo";
+import * as dotenv from 'dotenv'
+dotenv.config()
 export const app = express()
 const port = process.env.PORT || 3003
 

@@ -23,21 +23,24 @@ export const userService = {
         const hash = await bcrypt.hash(password, salt)
         return hash
     },
-    async checkCredentials(login:string, password:string){
+    async checkCredentials(login:string, password:string):Promise<any>{
         const user = await userRepo.findByLogin(login)
         console.log("User in creds with login ---> "+login)
         console.log(user)
-        if(!user) return false
+        if(!user) return null
         const passwordHash = await this._generateHash(password, user.passwordSalt)
         if(user.passwordHash !== passwordHash){
-            return false
+            return null
         }
-        return true
+        return user
     },
     async deleteUser(id:string){
         return await userRepo.deleteUser(id);
     },
-
+    async getUserById(id:string){
+        const user = await userRepo.findById(id)
+        return user
+    },
     async getUsers( searchLoginTerm:any, searchEmailTerm:any, pageNumber: number, pageSize: number, sortBy: any, sortDirection: any){
         return await userRepo.getUsers(searchLoginTerm, searchEmailTerm,pageNumber, pageSize, sortBy, sortDirection);
     }

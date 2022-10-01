@@ -15,8 +15,21 @@ export const userRepo = {
 },
     async findByLogin(login:string){
         const user = await userCollection.findOne({login:login}/*{$or:[{"email":loginOrEmail},{"userName":loginOrEmail}]}*/)
+        if(user){
+            // @ts-ignore
+            delete Object.assign(user, {["id"]: user["_id"] })["_id"];
+        }
         return user;
 },
+    async findById(id:string){
+        const user = await userCollection.find({_id: new ObjectId(id)}).project({passwordHash:0, passwordSalt:0, createdAt:0}).toArray()
+        console.log("Repo")
+        if(user[0]){
+            // @ts-ignore
+            delete Object.assign(user[0], {["userId"]: user[0]["_id"] })["_id"];
+        }
+        return user[0];
+    },
     async deleteUser(id:string){
         const result = await userCollection.deleteOne({_id:new ObjectId(id)})
         return result.deletedCount === 1
