@@ -7,7 +7,7 @@ export const commentService = {
             content:content,
             postId:postId,
             userId:userId,
-            userName:userName,
+            userLogin:userName,
             createdAt:new Date().toISOString()
         }
 

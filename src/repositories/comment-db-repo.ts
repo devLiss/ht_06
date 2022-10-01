@@ -27,7 +27,7 @@ export const commentRepo = {
                 id:"$_id",
                 content:1,
                 userId:1,
-                userName:1,
+                userLogin:1,
                 createdAt:1}})
             .skip((pageNumber-1)*pageSize)
             .limit(pageSize)
