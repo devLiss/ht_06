@@ -11,15 +11,18 @@ import {authRouter} from "./routes/authRouter";
 import {userRepo} from "./repositories/user-db-repo";
 import * as dotenv from 'dotenv'
 import {commentsRouter} from "./routes/commentsRouter";
+import {commentService} from "./domain/comments-service";
+import {commentRepo} from "./repositories/comment-db-repo";
 dotenv.config()
 export const app = express()
 const port = process.env.PORT || 3003
 
 app.use(bodyParser.json());
 app.delete('/testing/all-data',async (req: Request, res: Response) => {
-    const isBlogsDeleted = await blogsRepo.deleteAll();
-    const isPostsDeleted = await postRepo.deleteAll();
-    const isUsersDeleted = await userRepo.deleteAll();
+    await blogsRepo.deleteAll();
+    await postRepo.deleteAll();
+    await userRepo.deleteAll();
+    await commentRepo.deleteAll();
 
     res.status(204).send([])
 })

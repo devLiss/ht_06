@@ -42,5 +42,9 @@ export const commentRepo = {
             totalCount:totalCount,
             items:comments
         }
+    },
+    async deleteAll():Promise<boolean>{
+        const result = await commentsCollection.deleteMany({})
+        return result.deletedCount > 1
     }
 }
