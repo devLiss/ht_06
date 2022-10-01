@@ -14,7 +14,7 @@ commentsRouter.get('/:id',async(req:Request, res:Response)=>{
     }
     res.status(200).send(comment)
 })
-commentsRouter.delete('/:commentId',authMiddleware,body('content').trim().isLength({min:20, max:300}),inputValidationMiddleware, async(req:Request, res:Response)=>{
+commentsRouter.delete('/:commentId',authMiddleware, async(req:Request, res:Response)=>{
     const comment = await commentService.getCommentByID(req.params.commentId);
     if(!comment){
         res.send(404)

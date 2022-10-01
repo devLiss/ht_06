@@ -15,7 +15,7 @@ import {commentService} from "./domain/comments-service";
 import {commentRepo} from "./repositories/comment-db-repo";
 dotenv.config()
 export const app = express()
-const port = process.env.PORT || 3003
+const port = process.env.PORT || 5000
 
 app.use(bodyParser.json());
 app.delete('/testing/all-data',async (req: Request, res: Response) => {
