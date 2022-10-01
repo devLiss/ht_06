@@ -15,6 +15,8 @@ import {
     sortDirectionSanitizer
 } from "../middlewares/sanitazers";
 import {body} from "express-validator";
+import {commentService} from "../domain/comments-service";
+import {authMiddleware} from "../middlewares/authMiddleware";
 
 export const postsRouter = Router({})
 
@@ -50,7 +52,25 @@ postsRouter.delete('/:id', authGuard,async (req: Request, res: Response) => {
     isDeleted ? res.send(204) : res.send(404);
 })
 
-postsRouter.get('/:postId/comments')
-postsRouter.post('/:postId/comments',body('content').trim().isLength({min:20, max:300}),inputValidationMiddleware, async(req:Request, res:Response) => {
-  res.status(201)
+postsRouter.get('/:postId/comments', pageNumberSanitizer, pageSizeSanitizer, sortBySanitizer,sortDirectionSanitizer, async (req: Request, res: Response) => {
+    const post  = await postService.findPostById(req.params.postId);
+    if(!post){
+        res.send(404)
+        return
+    }
+
+    const comments =  await commentService.getCommentsByPostId(req.params.postId,+req.query.pageNumber!, +req.query.pageSize!,req.query.sortBy,req.query.sortDirection);
+    res.status(200).send(comments)
+})
+postsRouter.post('/:postId/comments',authMiddleware,body('content').trim().isLength({min:20, max:300}),inputValidationMiddleware, async(req:Request, res:Response) => {
+
+    const post = await postService.findPostById(req.params.postId);
+    console.log(post)
+    if(!post){
+        res.send(404)
+        return
+    }
+    //@ts-ignore
+    const comment = await commentService.createComment(req.body.content, post!.id, req.user.userId, req.user.login)
+    res.status(201).send(comment)
 })

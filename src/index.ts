@@ -10,6 +10,7 @@ import {userRouter} from "./routes/usersRouter";
 import {authRouter} from "./routes/authRouter";
 import {userRepo} from "./repositories/user-db-repo";
 import * as dotenv from 'dotenv'
+import {commentsRouter} from "./routes/commentsRouter";
 dotenv.config()
 export const app = express()
 const port = process.env.PORT || 3003
@@ -26,6 +27,7 @@ app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
 app.use('/users', userRouter)
 app.use('/auth', authRouter)
+app.use('/comments', commentsRouter)
 app.get('/',(req:Request, res:Response)=>{
     res.send('Hello!')
 })

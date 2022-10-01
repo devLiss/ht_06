@@ -93,6 +93,6 @@ export const postRepo = {
     },
     async deleteAll():Promise<boolean>{
         const result = await postCollection.deleteMany({})
-        return result.deletedCount ===1
+        return result.deletedCount === 1
     }
 }

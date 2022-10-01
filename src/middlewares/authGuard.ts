@@ -27,5 +27,6 @@ export const authGuard = async (req:Request, res:Response, next:NextFunction)=>
     }
     else{
         res.send(401)
+        return
     }
 }
