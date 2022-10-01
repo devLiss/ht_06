@@ -2,7 +2,7 @@ import {MongoClient} from 'mongodb'
 import {blogType, postType} from "../types";
 import "dotenv/config";
 
-const mongoURI = process.env.mongoURI || 'mongodb://0.0.0.0:27017'/*process.env.mongoURI = "mongodb+srv://devliss:devlissadmin@incubator.pz501up.mongodb.net/?retryWrites=true&w=majority";//"mongodb://localhost:27017";*/
+const mongoURI = process.env.mongoURI || "mongodb+srv://devliss:devlissadmin@incubator.pz501up.mongodb.net/?retryWrites=true&w=majority";/*process.env.mongoURI = "mongodb+srv://devliss:devlissadmin@incubator.pz501up.mongodb.net/?retryWrites=true&w=majority";//"mongodb://localhost:27017";*/
 
 export const client = new MongoClient(mongoURI);
 export const blogCollection = client.db("ht_03").collection<blogType>("blogs");
