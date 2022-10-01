@@ -5,13 +5,13 @@ export const commentRepo = {
     async createComment(comment:any){
 
         await commentsCollection.insertOne(comment)
-        const findedComment = await commentsCollection.findOne({_id:comment._id},{projection:{_id:0, id:"$_id", userId:1, userName:1, content:1, createdAt:1}})
+        const findedComment = await commentsCollection.findOne({_id:comment._id},{projection:{_id:0, id:"$_id", userId:1, userLogin:1, content:1, createdAt:1}})
         console.log(findedComment)
         return findedComment;
     },
 
     async getCommentById(id:string){
-        return await commentsCollection.findOne({_id:new ObjectId(id)},{projection:{_id:0, id:"$_id", userId:1, userName:1, content:1, createdAt:1}})
+        return await commentsCollection.findOne({_id:new ObjectId(id)},{projection:{_id:0, id:"$_id", userId:1, userLogin:1, content:1, createdAt:1}})
     },
     async deleteComment(id:string){
         const result = await commentsCollection.deleteOne({_id:new ObjectId(id)})
