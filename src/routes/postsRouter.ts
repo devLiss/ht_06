@@ -14,6 +14,7 @@ import {
     sortBySanitizer,
     sortDirectionSanitizer
 } from "../middlewares/sanitazers";
+import {body} from "express-validator";
 
 export const postsRouter = Router({})
 
@@ -47,4 +48,9 @@ postsRouter.put('/:id', authGuard, postTitleValidation,postShortDescrValidation,
 postsRouter.delete('/:id', authGuard,async (req: Request, res: Response) => {
     const isDeleted = await postService.deletePost(req.params.id);
     isDeleted ? res.send(204) : res.send(404);
+})
+
+postsRouter.get('/:postId/comments')
+postsRouter.post('/:postId/comments',body('content').trim().isLength({min:20, max:300}),inputValidationMiddleware, async(req:Request, res:Response) => {
+  res.status(201)
 })
